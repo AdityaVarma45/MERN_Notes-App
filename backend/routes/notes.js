@@ -17,20 +17,27 @@ router.get('/', protect, async (req, res) => {
 
 //Create Post
 router.post('/', protect, async (req, res) => {
-  const {title, description} = req.body;
+  const { title, description } = req.body;
+
   try {
-    if(!title || !description) {
-      return res.status(400).json({message: 'Fill all the Fields'});
+    if (!title || !description) {
+      return res.status(400).json({ message: 'Fill all the fields' });
     }
+
     const note = await Note.create({
-      title, description, createdAt: req.user._id
-    })
+      title,
+      description,
+      createdBy: req.user._id,
+    });
+
     res.status(201).json(note);
 
-  } catch(err) {
-    res.status(500).json({message: 'server error'});
+  } catch (err) {
+    console.error("NOTE CREATE ERROR 👉", err);
+    res.status(500).json({ message: err.message });
   }
-})
+});
+
 
 // Get a note
 router.get("/:id", protect, async (req, res) => {
