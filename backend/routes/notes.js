@@ -1,6 +1,6 @@
 import express from 'express';
 import { protect } from '../middleware/auth.js';
-import Note from '../models/note.js';
+import Note from '../models/Note.js';
 
 const router = express.Router();
 
